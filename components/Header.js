@@ -1,6 +1,11 @@
 import React from 'react';
 import Image from 'next/image'; //outil de next qui compresse les images au format webp(gain de perf)
-import { SearchIcon } from '@heroicons/react/solid';
+import {
+  SearchIcon,
+  UserCircleIcon,
+  HomeIcon,
+  MenuIcon,
+} from '@heroicons/react/solid';
 //la balise <header> améliore le référencement
 
 function Header() {
@@ -15,11 +20,23 @@ function Header() {
           />
         </div>
       </div>
-      <div>
-        <input type="text" placeholder="recherchez sur Airbnb..." />
-        <SearchIcon className="h-8 bg-red-400 text-white rounded-full p-1 cursor-pointer" />
+      <div className="flex items-center border-2 rounded-full pl-5 text-gray-700 ">
+        <input
+          className="flex-grow bg-transparent outline-none text-sm "
+          type="text"
+          placeholder="recherchez sur Airbnb..."
+        />
+        <SearchIcon className="hidden md:inline-flex h-8 bg-red-400 text-white rounded-full p-1 cursor-pointer" />
       </div>
-      <div>right</div>
+      <div className="flex items-center space-x-2 justify-end text-gray-400 text-sm ">
+        <p>Mettre mon logement sur Airbnb</p>
+        <HomeIcon className="hidden md:inline-flex h-8 bg-red-400 text-white rounded-full p-1 cursor-pointer " />
+
+        <div className="flex items-center space-x-2 border-2 rounded-full p-2">
+          <UserCircleIcon className="hidden md:inline-flex h-8 bg-red-400 text-white rounded-full p-1 cursor-pointer " />
+          <MenuIcon className="h-8 " />
+        </div>
+      </div>
     </header>
   );
 }
