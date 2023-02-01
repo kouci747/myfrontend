@@ -26,15 +26,15 @@ function Header() {
           type="text"
           placeholder="recherchez sur Airbnb..."
         />
-        <SearchIcon className="hidden md:inline-flex h-8 bg-red-400 text-white rounded-full p-1 cursor-pointer" />
+        <SearchIcon className="hidden md:inline-flex h-6 bg-red-400 text-white rounded-full p-1 cursor-pointer" />
       </div>
-      <div className="flex items-center space-x-2 justify-end text-gray-400 text-sm ">
-        <p>Mettre mon logement sur Airbnb</p>
-        <HomeIcon className="hidden md:inline-flex h-8 bg-red-400 text-white rounded-full p-1 cursor-pointer " />
+      <div className=" flex items-center space-x-2 justify-end text-gray-400 text-sm ">
+        <p className="hidden md:inline">Mettre mon logement sur Airbnb</p>
+        <HomeIcon className="hidden md:inline-flex h-6 bg-red-400 text-white rounded-full p-1 cursor-pointer " />
 
         <div className="flex items-center space-x-2 border-2 rounded-full p-2">
-          <UserCircleIcon className="hidden md:inline-flex h-8 bg-red-400 text-white rounded-full p-1 cursor-pointer " />
-          <MenuIcon className="h-8 " />
+          <UserCircleIcon className="hidden md:inline-flex h-6 bg-red-400 text-white rounded-full p-1 cursor-pointer " />
+          <MenuIcon className="h-6 cursor-pointer" />
         </div>
       </div>
     </header>
