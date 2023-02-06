@@ -4,7 +4,7 @@ import Image from 'next/image';
 function Banner() {
   return (
     <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] aspect-auto">
-      <Image src="/algerie.jpg" fill />
+      <Image src="/algerie.jpg" alt="Crépuscule rougeatre sur le Hoggar" fill />
 
       <div className="absolute top-1/2 w-full text-center  ">
         <p className="text-3xl text-white  font-extrabold font-mono ">

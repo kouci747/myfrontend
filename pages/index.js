@@ -1,0 +1,74 @@
+//import type { NextPage } from 'next';
+import Head from 'next/head';
+import Header from '../components/Header';
+import Banner from '../components/Banner';
+import PlaceCard from '../components/PlaceCard';
+import Image from 'next/image';
+
+export default function Home({ explorePlaces, exploreData }) {
+  //avoir {exploreData} en param de Home() a comme avantage que je n'ai plus à mettre props.exploreData partout
+  return (
+    <div className="">
+      <Head>
+        <title>AirBnb by Kouci</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Header />
+
+      <Banner />
+      <main className="max-w-7xl  mx-auto px-8 sm:px-16">
+        <section className="pt-6">
+          <h2>Les logements les plus récents</h2>
+          {exploreData?.map((item) => (
+            // <>
+            //   <h1>{item.title}</h1> <br />
+            //   <h1>{item.description}</h1>
+            //   <Image src={item.images[1]} />
+            //   <h1>{item.pricing.perDay}</h1>
+            // </>
+            <PlaceCard
+              key={item._id}
+              address={item.address.city}
+              images={item.images[1]}
+              pricing={item.pricing.perDay}
+              capacity={item.capacity}
+            />
+          ))}
+        </section>
+        <section>
+          <h2>Les types de logements</h2>
+          {explorePlaces?.map((b) => (
+            <h1>{b.name}</h1>
+          ))}
+        </section>
+      </main>
+    </div>
+  );
+}
+
+export async function getStaticProps() {
+  const exploreData = await fetch(
+    'http://localhost:4000/api/v1/place/getPlaces'
+  ).then((res) => res.json());
+
+  return {
+    props: {
+      exploreData: exploreData,
+    },
+  };
+}
+
+//console.log('lol0');
+export async function getPlacesProps() {
+  const explorePlaces = await fetch(
+    'http://localhost:4000/api/v1/type-place/getTypesPlaces'
+  ).then((res) => res.json());
+
+  return {
+    props: {
+      explorePlaces: explorePlaces,
+    },
+  };
+}
+
+//export default Home;
