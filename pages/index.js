@@ -5,7 +5,7 @@ import Banner from '../components/Banner';
 import PlaceCard from '../components/PlaceCard';
 import Image from 'next/image';
 
-export default function Home({ explorePlaces, exploreData }) {
+export default function Home({ exploreData, explorePlaces }) {
   //avoir {exploreData} en param de Home() a comme avantage que je n'ai plus à mettre props.exploreData partout
   return (
     <div className="">
@@ -19,26 +19,29 @@ export default function Home({ explorePlaces, exploreData }) {
       <main className="max-w-7xl  mx-auto px-8 sm:px-16">
         <section className="pt-6">
           <h2>Les logements les plus récents</h2>
-          {exploreData?.map((item) => (
-            // <>
-            //   <h1>{item.title}</h1> <br />
-            //   <h1>{item.description}</h1>
-            //   <Image src={item.images[1]} />
-            //   <h1>{item.pricing.perDay}</h1>
-            // </>
-            <PlaceCard
-              key={item._id}
-              address={item.address.city}
-              images={item.images[1]}
-              pricing={item.pricing.perDay}
-              capacity={item.capacity}
-            />
-          ))}
+          {/**it's mobile first, then small screens, then larger ones */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {exploreData?.map((item) => (
+              // <>
+              //   <h1>{item.title}</h1> <br />
+              //   <h1>{item.description}</h1>
+              //   <Image src={item.images[1]} />
+              //   <h1>{item.pricing.perDay}</h1>
+              // </>
+              <PlaceCard
+                key={item._id}
+                address={item.address.city}
+                images={item.images[1]}
+                pricing={item.pricing.perDay}
+                capacity={item.capacity}
+              />
+            ))}
+          </div>
         </section>
         <section>
           <h2>Les types de logements</h2>
-          {explorePlaces?.map((b) => (
-            <h1>{b.name}</h1>
+          {explorePlaces?.map((itemz) => (
+            <h1>{itemz.name} </h1>
           ))}
         </section>
       </main>
@@ -58,17 +61,12 @@ export async function getStaticProps() {
   };
 }
 
-//console.log('lol0');
-export async function getPlacesProps() {
+export async function getStaticProps() {
   const explorePlaces = await fetch(
     'http://localhost:4000/api/v1/type-place/getTypesPlaces'
   ).then((res) => res.json());
 
-  return {
-    props: {
-      explorePlaces: explorePlaces,
-    },
-  };
+  return { props: { explorePlaces: explorePlaces } };
 }
 
 //export default Home;
