@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Header from '../components/Header';
 import Banner from '../components/Banner';
 import PlaceCard from '../components/PlaceCard';
+import TypePlaceCard from '../components/TypePlaceCard';
 import Image from 'next/image';
 
 export default function Home({ exploreData, explorePlaces }) {
@@ -17,6 +18,13 @@ export default function Home({ exploreData, explorePlaces }) {
 
       <Banner />
       <main className="max-w-7xl  mx-auto px-8 sm:px-16">
+        <section>
+          <div className="flex p-2 overflow-scroll">
+            {explorePlaces?.map((itemz) => (
+              <TypePlaceCard key={itemz._id} thumbnail={itemz.thumbnail} />
+            ))}
+          </div>
+        </section>
         <section className="pt-6">
           <h2>Les logements les plus récents</h2>
           {/**it's mobile first, then small screens, then larger ones */}
@@ -49,6 +57,7 @@ export default function Home({ exploreData, explorePlaces }) {
   );
 }
 
+//can't have two or more getStaticProps separately
 // export async function getStaticProps() {
 //   const exploreData = await fetch(
 //     'http://localhost:4000/api/v1/place/getPlaces'
@@ -61,22 +70,15 @@ export default function Home({ exploreData, explorePlaces }) {
 //   };
 // }
 export async function getServerSideProps() {
-  const [operationsRes, incidentsRes] = await Promise.all([
+  const [exploreDataRes, explorePlacesRes] = await Promise.all([
     fetch('http://localhost:4000/api/v1/place/getPlaces'),
     fetch('http://localhost:4000/api/v1/type-place/getTypesPlaces'),
   ]);
   const [exploreData, explorePlaces] = await Promise.all([
-    operationsRes.json(),
-    incidentsRes.json(),
+    exploreDataRes.json(),
+    explorePlacesRes.json(),
   ]);
   return { props: { exploreData, explorePlaces } };
 }
-// export async function getStaticProps() {
-//   const explorePlaces = await fetch(
-//     'http://localhost:4000/api/v1/type-place/getTypesPlaces'
-//   ).then((res) => res.json());
-
-//   return { props: { explorePlaces: explorePlaces } };
-// }
 
 //export default Home;
