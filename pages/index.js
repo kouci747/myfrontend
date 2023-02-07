@@ -49,24 +49,34 @@ export default function Home({ exploreData, explorePlaces }) {
   );
 }
 
-export async function getStaticProps() {
-  const exploreData = await fetch(
-    'http://localhost:4000/api/v1/place/getPlaces'
-  ).then((res) => res.json());
+// export async function getStaticProps() {
+//   const exploreData = await fetch(
+//     'http://localhost:4000/api/v1/place/getPlaces'
+//   ).then((res) => res.json());
 
-  return {
-    props: {
-      exploreData: exploreData,
-    },
-  };
+//   return {
+//     props: {
+//       exploreData: exploreData,
+//     },
+//   };
+// }
+export async function getServerSideProps() {
+  const [operationsRes, incidentsRes] = await Promise.all([
+    fetch('http://localhost:4000/api/v1/place/getPlaces'),
+    fetch('http://localhost:4000/api/v1/type-place/getTypesPlaces'),
+  ]);
+  const [exploreData, explorePlaces] = await Promise.all([
+    operationsRes.json(),
+    incidentsRes.json(),
+  ]);
+  return { props: { exploreData, explorePlaces } };
 }
+// export async function getStaticProps() {
+//   const explorePlaces = await fetch(
+//     'http://localhost:4000/api/v1/type-place/getTypesPlaces'
+//   ).then((res) => res.json());
 
-export async function getStaticProps() {
-  const explorePlaces = await fetch(
-    'http://localhost:4000/api/v1/type-place/getTypesPlaces'
-  ).then((res) => res.json());
-
-  return { props: { explorePlaces: explorePlaces } };
-}
+//   return { props: { explorePlaces: explorePlaces } };
+// }
 
 //export default Home;
