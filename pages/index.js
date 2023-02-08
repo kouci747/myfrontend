@@ -19,9 +19,13 @@ export default function Home({ exploreData, explorePlaces }) {
       <Banner />
       <main className="max-w-7xl  mx-auto px-8 sm:px-16">
         <section>
-          <div className="flex p-2 overflow-scroll">
+          <div className="flex p-2 overflow-scroll scrollbar-hide">
             {explorePlaces?.map((itemz) => (
-              <TypePlaceCard key={itemz._id} thumbnail={itemz.thumbnail} />
+              <TypePlaceCard
+                key={itemz._id}
+                thumbnail={itemz.thumbnail}
+                name={itemz.name}
+              />
             ))}
           </div>
         </section>
@@ -30,12 +34,6 @@ export default function Home({ exploreData, explorePlaces }) {
           {/**it's mobile first, then small screens, then larger ones */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {exploreData?.map((item) => (
-              // <>
-              //   <h1>{item.title}</h1> <br />
-              //   <h1>{item.description}</h1>
-              //   <Image src={item.images[1]} />
-              //   <h1>{item.pricing.perDay}</h1>
-              // </>
               <PlaceCard
                 key={item._id}
                 address={item.address.city}
@@ -46,12 +44,7 @@ export default function Home({ exploreData, explorePlaces }) {
             ))}
           </div>
         </section>
-        <section>
-          <h2>Les types de logements</h2>
-          {explorePlaces?.map((itemz) => (
-            <h1>{itemz.name} </h1>
-          ))}
-        </section>
+        <section className=""></section>
       </main>
     </div>
   );
