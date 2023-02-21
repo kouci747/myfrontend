@@ -6,9 +6,24 @@ import {
   HomeIcon,
   MenuIcon,
 } from '@heroicons/react/solid';
+import { useState } from 'react';
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
+import 'react-date-range/dist/defaultRanges';
+import { DateRangePicker } from 'react-date-range';
 //la balise <header> améliore le référencement
 
 function Header() {
+  const [searchInput, setSearchInput] = useState('');
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const selectionRange = {
+    startDate: startDate,
+    endDate: endDate,
+    key: 'selection',
+  };
+  //console.log(searchInput);
+
   return (
     <header className="sticky top-0 z-50 grid grid-cols-3 bg-white shadow-md py-2 px-2 md:py-1">
       <div>
@@ -23,6 +38,8 @@ function Header() {
       <div className="flex items-center border-2 rounded-full pl-5 text-gray-700 ">
         <input
           className="flex-grow bg-transparent outline-none text-sm "
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
           type="text"
           placeholder="recherchez sur Airbnb..."
         />
@@ -37,6 +54,16 @@ function Header() {
           <MenuIcon className="h-6 cursor-pointer" />
         </div>
       </div>
+
+      {searchInput && (
+        <div>
+          <DateRangePicker
+            ranges={[selectionRange]}
+            minDate={new Date()}
+            rangeColors={['#FD5B60']} //orange rosé caractéristique d'AIRBNB
+          />
+        </div>
+      )}
     </header>
   );
 }

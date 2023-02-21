@@ -2,9 +2,11 @@
 import Head from 'next/head';
 import Header from '../components/Header';
 import Banner from '../components/Banner';
-import PlaceCard from '../components/PlaceCard';
 import TypePlaceCard from '../components/TypePlaceCard';
+import PlaceCard from '../components/PlaceCard';
+import Footer from '../components/Footer';
 import Image from 'next/image';
+import { useState } from 'react';
 
 export default function Home({ exploreData, explorePlaces }) {
   //avoir {exploreData} en param de Home() a comme avantage que je n'ai plus à mettre props.exploreData partout
@@ -45,6 +47,7 @@ export default function Home({ exploreData, explorePlaces }) {
           </div>
         </section>
         <section className=""></section>
+        <Footer />
       </main>
     </div>
   );
