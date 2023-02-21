@@ -5,22 +5,44 @@ import {
   UserCircleIcon,
   HomeIcon,
   MenuIcon,
+  UsersIcon,
 } from '@heroicons/react/solid';
 import { useState } from 'react';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import 'react-date-range/dist/defaultRanges';
 import { DateRangePicker } from 'react-date-range';
+import { useRouter } from 'next/router';
 //la balise <header> améliore le référencement
 
 function Header() {
   const [searchInput, setSearchInput] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [nbOfGuests, setNbOfGuests] = useState(1);
+
+  const handleSelect = (ranges) => {
+    setStartDate(ranges.selection.startDate);
+    setEndDate(ranges.selection.endDate);
+  };
   const selectionRange = {
     startDate: startDate,
     endDate: endDate,
     key: 'selection',
+  };
+
+  const resetInput = () => {
+    setSearchInput('');
+  };
+  const router = useRouter();
+
+  const search = () => {
+    router.push({
+      pathname: '/search',
+      query: {
+        location: searchInput,
+      },
+    });
   };
   //console.log(searchInput);
 
@@ -56,12 +78,40 @@ function Header() {
       </div>
 
       {searchInput && (
-        <div>
+        <div className="flex flex-col col-span-3 mx-auto">
           <DateRangePicker
             ranges={[selectionRange]}
             minDate={new Date()}
             rangeColors={['#FD5B60']} //orange rosé caractéristique d'AIRBNB
+            onChange={handleSelect}
           />
+          <div className="flex items-center">
+            <h2 className="text-2xl flex-grow">Number of guests</h2>
+            <input
+              type="number"
+              min={1}
+              value={nbOfGuests}
+              onChange={(e) => {
+                setNbOfGuests(e.target.value);
+              }}
+              className="w-12 pl-2 text-large outline-none text-red-400"
+            />
+            <UsersIcon className="h-5" />
+          </div>
+          <div className="flex">
+            <button
+              onClick={resetInput}
+              className="flex-grow text-gray-400 rounded-sm"
+            >
+              Annuler
+            </button>
+            <button
+              onClick={search}
+              className="flex-grow text-red-400 rounded-sm"
+            >
+              Rechercher
+            </button>
+          </div>
         </div>
       )}
     </header>
