@@ -17,7 +17,7 @@ function InfoCard({ title, pricing, images, address, description }) {
     //   </div>
     // </div>
     <div className="flex py-7 px-2 pr-4 border-b cursor-pointer hover:opacity-80 hover:shadow-lg  active:scale-90 transition duration:100">
-      <div className="relative h-24 w-40 md:h-52 md:w-80 flex-shrink-0 ">
+      <div className="relative h-24 w-40 md:h-52 md:w-80 flex-shrink-0 first:border-t ">
         <Image src={images} fill className="rounded-xl" />
       </div>
 
