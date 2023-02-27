@@ -15,11 +15,12 @@ import { DateRangePicker } from 'react-date-range';
 import { useRouter } from 'next/router';
 //la balise <header> améliore le référencement
 
-function Header() {
+function Header({ placeholder }) {
   const [searchInput, setSearchInput] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [nbOfGuests, setNbOfGuests] = useState(1);
+  const router = useRouter();
 
   const handleSelect = (ranges) => {
     setStartDate(ranges.selection.startDate);
@@ -34,13 +35,15 @@ function Header() {
   const resetInput = () => {
     setSearchInput('');
   };
-  const router = useRouter();
 
   const search = () => {
     router.push({
       pathname: '/search',
       query: {
         location: searchInput,
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        nbOfGuests,
       },
     });
   };
@@ -49,7 +52,10 @@ function Header() {
   return (
     <header className="sticky top-0 z-50 grid grid-cols-3 bg-white shadow-md py-2 px-2 md:py-1">
       <div>
-        <div className="relative flex items-center h-10 cursor-pointer my-auto">
+        <div
+          onClick={() => router.push('/')}
+          className="relative flex items-center h-10 cursor-pointer my-auto"
+        >
           <Image
             src="https://links.papareact.com/qd3"
             width={100}
@@ -63,7 +69,7 @@ function Header() {
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
           type="text"
-          placeholder="recherchez sur Airbnb..."
+          placeholder={placeholder || 'recherchez sur Airbnb...'}
         />
         <SearchIcon className="hidden md:inline-flex h-6 bg-red-400 text-white rounded-full p-1 cursor-pointer" />
       </div>
