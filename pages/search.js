@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useRouter } from 'next/router';
 import { format } from 'date-fns';
+import InfoCard from '../components/InfoCard';
 
 function Search({ searchResults }) {
   /* note à moi-meme : 
@@ -34,6 +35,18 @@ function Search({ searchResults }) {
             {formattedStartDate} au {formattedEndDate}
           </p>
           <h1>région : {location}</h1>
+
+          {searchResults?.map((item) => (
+            <InfoCard
+              key={item._id}
+              title={item.title}
+              address={item.address.city}
+              images={item.images[0]}
+              pricing={item.pricing.perDay}
+              capacity={item.capacity}
+              description={item.description}
+            />
+          ))}
         </section>
       </main>
 
